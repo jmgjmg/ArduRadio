@@ -2,7 +2,7 @@ ArduRadio: Playing Internet radio with Arduino
 ===============================================
 This project allows to play Internet Radio using Arduino. The project uses NFC tags (Type 2 -Mifare Ultralight) to switch stations.
 
-A more detailed description of the project can be found in http://www.slideshare.net/JavierMontaner/arduradio
+A more detailed description of the project can be found in http://www.slideshare.net/JavierMontaner/arduradio You can also check the images folder in this github project for some pictures
 
 For further info you can contact the author Javier Montaner (twitter: https://twitter.com/tumaku_)
 
@@ -15,8 +15,12 @@ Required HW:
 
 The libraries of the MP3 shield (by Sparkfun Electronics and modified by Bill Porter) and for the NFC Shield (by SeeedStudio based on the work of Adafruit/Ladyada) have been updated to add new functionality.
 
-Connection instructions:
+Instructions:
 ------------------------
+### Library instructions
+
+Copy the two folders in the libraries folder of this project (PN532Seeed, SFEMP3Shield) inside the libraries folder of your Arduino installation. The location of the libraries folder depends on your OS and installation but it is usually located just under your Arduino home directory.
+
 ### Stacking instructions
 
 - Top Level:    NFC shield
