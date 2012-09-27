@@ -87,12 +87,11 @@ The loop method implements two main flows:
 
 - If the connection to a streaming server needs to be (re)started, the script tries to open an http connection. If successful, the reading&playing flow will be executed next until next change of station. If the connection cannot be established, the script waits for 5 seconds and retries again. After 3 unsuccessful retries, the code selects the next station in the list and tries to connect to its server.
 
-- The reading and playing flow handles the reading of NFC tags and the rendering of the audio stream. 
+-    The reading and playing flow handles the reading of NFC tags and the rendering of the audio stream. 
 
-The NFC reader is only read every one second. If a card is detected, the software checks if it includes a correct NDEF URL record (in the current version this check only works for NFC Type 2 tags, Mifare Ultralight). If a URL is found, the code updates the station server, path and port with the read data and tries to connect to the server (see flow above).
-If no URL is detected, the software checks if the read tagId corresponds to any of the hardcoded id's defined in the code. If yes, the corresponding station in the list is selected and the code tries to connect to its server (see flow above). If the id is unknown, the code chages to the next station in the list and tries to connect to its server (see flow above)
+    The NFC reader is only read every one second. If a card is detected, the software checks if it includes a correct NDEF URL record (in the current version this check only works for NFC Type 2 tags, Mifare Ultralight). If a URL is found, the code updates the station server, path and port with the read data and tries to connect to the server (see flow above). If no URL is detected, the software checks if the read tagId corresponds to any of the hardcoded id's defined in the code. If yes, the corresponding station in the list is selected and the code tries to connect to its server (see flow above). If the id is unknown, the code chages to the next station in the list and tries to connect to its server (see flow above)
 
-The code then checks if there is data available to be read in the Ethenet client (up to 32 bytes). If so it stores the received data in a byte array and passes it to the MP3 shield to play it. If no data is available for 100 consecutive loops, the connection to the server is restarted. 
+    The code then checks if there is data available to be read in the Ethenet client (up to 32 bytes). If so it stores the received data in a byte array and passes it to the MP3 shield to play it. If no data is available for 100 consecutive loops, the connection to the server is restarted. 
 
 
 
@@ -110,7 +109,7 @@ Known Issues
 External Links
 ----------------
 - Jordi Parra's SpotifyRadio: Radio that plays Spotify music http://postscapes.com/spotify-box
-- Bill Porter´s blog entry on MP3 shield: http://www.billporter.info/sparkfun-mp3-shield-arduino-library/
+- Bill Porter?s blog entry on MP3 shield: http://www.billporter.info/sparkfun-mp3-shield-arduino-library/
 - (Rui) Techman's blog entry on VS1053 and MP3 shield: http://supertechman.blogspot.com.es/2010/11/playing-mp3-with-vs1053-arduino-shield.html
 
 License
