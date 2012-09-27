@@ -1,4 +1,4 @@
-ArduRadio: Playing Internet radio with Arduino
+ArduRadio: Playing Internet Radio with Arduino
 ===============================================
 This project allows to play Internet Radio using Arduino. The project uses NFC tags (Type 2 -Mifare Ultralight) to switch stations.
 
@@ -15,7 +15,7 @@ Required HW:
 
 The libraries of the MP3 shield (by Sparkfun Electronics and modified by Bill Porter) and for the NFC Shield (by SeeedStudio based on the work of Adafruit/Ladyada) have been updated to add new functionality.
 
-Instructions:
+Instructions
 ------------------------
 ### Library instructions
 
@@ -80,13 +80,20 @@ The NFC shield library allows the personalisation of this PIN values by SW at in
 
 Personalising NFC Tags with an Android Terminal
 ------------------------------------------------
-To be done
+You can use NXP application TagWriter. Select "Create and write" and then  "New","URL" and "Create new bookmark". Enter the URL of the audio stream/station and then press "Next" and bring the tag close to the handset. 
 
+Note that although the TagWriter application can write NFC tags of any type, the current version of ArduRadio can only understand Type 2 tags (Mifare Ultralight)
 
 Known Issues
 -------------
 - This set-up only works for audio streams up to 32kbps. Higher qualities cannot be processed fast enough by teh processor and result in bumpy audio (or no audio at all). Higher bitrates could theoretically be achievable with a faster and more powerful processor (e.g. the one implemented in teh new official Wifi shield)
 - The NFClibrary can only read NFC tags Type 2 (Mifare Ultralight) and even then in a very harcoded way. A proper NFC/NDEF library must be written for a real and universal product. In the current version when an unknown tag is read or the NDEF cannot be processed, the code just looks for the "Next Station" no matter what the format of the tag is.
+
+Esternal Links
+----------------
+- Jordi Parra's SpotifyRadio: Radio that plays Spotify music http://postscapes.com/spotify-box
+- Bill Porter´s blog entry on MP3 shield: http://www.billporter.info/sparkfun-mp3-shield-arduino-library/
+- (Rui) Techman's blog entry on VS1053 and MP3 shield: http://supertechman.blogspot.com.es/2010/11/playing-mp3-with-vs1053-arduino-shield.html
 
 License
 -------------
