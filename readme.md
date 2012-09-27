@@ -13,7 +13,9 @@ Required HW:
 - MP3 shield from SparkFun Electronics
 - NFC shield from SeeedStudio
 
-The libraries of the MP3 shield (by Sparkfun Electronics and modified by Bill Porter) and for the NFC Shield (by SeeedStudio based on the work of Adafruit/Ladyada) have been updated to add new functionality.
+The following libraries have been updated to add new functionality required for this project:
+- MP3 shield (by Sparkfun Electronics and modified by Bill Porter)
+- NFC Shield (by SeeedStudio based on the work of Adafruit/Ladyada)
 
 Instructions
 ------------------------
@@ -58,7 +60,7 @@ Plug on top of MP3 shield using stackable headers:
 - Use 1 x 6-PIN header for digital PINs 0 to 5 
 Most of these PIN connections are not required other than to hold the NFC shield attached to the other shields.
 
-The NFC shield uses SPI but the PINs are hardwired not to the digital PINS (11, 12, 13) as in the MP3 shield but to the equivalent ICSP PINS.
+The NFC shield uses SPI but the PINs are hardwired not to the digital PINS (11, 12, 13) as in the MP3 shield but to the equivalent ICSP PINS. Additionally the NFC shield implements the SPI protocol through software and the implementation is incompatible with the SPI HW library used by the MP3 and Ethernet shields. As a consequence we cannot use the same set of PINs to support the NFC shield and the MP3/Ethernet shields.
 Connect jumper wires between the SPI PINs hardwired in the ICSP plug of the NFC shield and those in the Arduino Mega:
 - ICSP PIN MOSI in NFC shield -> PIN 46 in Arduino Mega
 - ICSP PIN MISO in NFC shield -> PIN 47 in Arduino Mega
@@ -91,7 +93,7 @@ The loop method implements two main flows:
 
     The NFC reader is only read every one second. If a card is detected, the software checks if it includes a correct NDEF URL record (in the current version this check only works for NFC Type 2 tags, Mifare Ultralight). If a URL is found, the code updates the station server, path and port with the read data and tries to connect to the server (see flow above). If no URL is detected, the software checks if the read tagId corresponds to any of the hardcoded id's defined in the code. If yes, the corresponding station in the list is selected and the code tries to connect to its server (see flow above). If the id is unknown, the code chages to the next station in the list and tries to connect to its server (see flow above)
 
-    The code then checks if there is data available to be read in the Ethenet client (up to 32 bytes). If so it stores the received data in a byte array and passes it to the MP3 shield to play it. If no data is available for 100 consecutive loops, the connection to the server is restarted. 
+    The code checks every loop if there is data available to be read in the Ethenet client (up to 32 bytes). If so it stores the received data in a byte array and passes it to the MP3 shield to play it. If no data is available for 100 consecutive loops, the connection to the server is restarted. 
 
 
 
@@ -103,13 +105,13 @@ Note that although the TagWriter application can write NFC tags of any type, the
 
 Known Issues
 -------------
-- This set-up only works for audio streams up to 32kbps. Higher qualities cannot be processed fast enough by teh processor and result in bumpy audio (or no audio at all). Higher bitrates could theoretically be achievable with a faster and more powerful processor (e.g. the one implemented in teh new official Wifi shield)
+- This set-up only works for audio streams up to 32kbps. Higher qualities cannot be processed fast enough by teh processor and result in bumpy audio (or no audio at all). Higher bitrates can theoretically be achievable with a faster and more powerful processor (e.g. the one implemented in the new official Wifi shield)
 - The NFClibrary can only read NFC tags Type 2 (Mifare Ultralight) and even then in a very harcoded way. A proper NFC/NDEF library must be written for a real and universal product. In the current version when an unknown tag is read or the NDEF cannot be processed, the code just looks for the "Next Station" no matter what the format of the tag is.
 
 External Links
 ----------------
-- Jordi Parra's SpotifyRadio: Radio that plays Spotify music http://postscapes.com/spotify-box
-- Bill Porter?s blog entry on MP3 shield: http://www.billporter.info/sparkfun-mp3-shield-arduino-library/
+- Jordi Parra's SpotifyRadio project: Radio that plays Spotify music http://postscapes.com/spotify-box
+- Bill Porter's blog entry on MP3 shield and library: http://www.billporter.info/sparkfun-mp3-shield-arduino-library/
 - (Rui) Techman's blog entry on VS1053 and MP3 shield: http://supertechman.blogspot.com.es/2010/11/playing-mp3-with-vs1053-arduino-shield.html
 
 License
