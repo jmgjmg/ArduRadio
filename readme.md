@@ -77,6 +77,24 @@ The NFC shield library allows the personalisation of this PIN values by SW at in
     #define NFC_MOSI 46
     #define NFC_SCK 48
     PN532 nfc(NFC_SCK, NFC_MISO, NFC_MOSI, NFC_SS);
+	
+Arduino Script
+---------------
+The Arduino script (NFCControlledInternetRadio_Ethernet.ino) initialises NFC, MP3 and Ethernet shields in the setup() method. If there is any error, the script enters an infinite loop and stays there forever.
+The code includes a harcoded list of predefined audio stream servers.
+
+The loop method implements two main flows:
+
+- If the connection to a streaming server needs to be (re)started, the script tries to open an http connection. If successful, the reading&playing flow will be executed next until next change of station. If the connection cannot be established, the script waits for 5 seconds and retries again. After 3 unsuccessful retries, the code selects the next station in the list and tries to connect to its server.
+
+- The reading and playing flow handles the reading of NFC tags and the rendering of the audio stream. 
+
+The NFC reader is only read every one second. If a card is detected, the software checks if it includes a correct NDEF URL record (in the current version this check only works for NFC Type 2 tags, Mifare Ultralight). If a URL is found, the code updates the station server, path and port with the read data and tries to connect to the server (see flow above).
+If no URL is detected, the software checks if the read tagId corresponds to any of the hardcoded id's defined in the code. If yes, the corresponding station in the list is selected and the code tries to connect to its server (see flow above). If the id is unknown, the code chages to the next station in the list and tries to connect to its server (see flow above)
+
+The code then checks if there is data available to be read in the Ethenet client (up to 32 bytes). If so it stores the received data in a byte array and passes it to the MP3 shield to play it. If no data is available for 100 consecutive loops, the connection to the server is restarted. 
+
+
 
 Personalising NFC Tags with an Android Terminal
 ------------------------------------------------
@@ -89,7 +107,7 @@ Known Issues
 - This set-up only works for audio streams up to 32kbps. Higher qualities cannot be processed fast enough by teh processor and result in bumpy audio (or no audio at all). Higher bitrates could theoretically be achievable with a faster and more powerful processor (e.g. the one implemented in teh new official Wifi shield)
 - The NFClibrary can only read NFC tags Type 2 (Mifare Ultralight) and even then in a very harcoded way. A proper NFC/NDEF library must be written for a real and universal product. In the current version when an unknown tag is read or the NDEF cannot be processed, the code just looks for the "Next Station" no matter what the format of the tag is.
 
-Esternal Links
+External Links
 ----------------
 - Jordi Parra's SpotifyRadio: Radio that plays Spotify music http://postscapes.com/spotify-box
 - Bill Porter´s blog entry on MP3 shield: http://www.billporter.info/sparkfun-mp3-shield-arduino-library/
